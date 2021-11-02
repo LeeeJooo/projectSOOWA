@@ -5,24 +5,21 @@ from tensorflow.keras.models import load_model
 from collections import defaultdict
 from itertools import chain
 
-
-
-
 CLOUD, SHINE, RAINBOW, LIKE, SNOW, FORSYTHIA, SPRING, GALAXY = defaultdict(int), defaultdict(int), defaultdict(int), defaultdict(int), defaultdict(int), defaultdict(int), defaultdict(int), defaultdict(int)
 actionsONE, actionsTWO = defaultdict(int), defaultdict(int)
 Actions = []
 
-cloudONE = {0:'white', 1:'be', 2:'here', 3:'probably'}
+cloudONE = {0:'white', 1:'be', 2:'here', 3:'probably', 4:'aboveONE'} ## 수정!!
 cloudTWO = {0:'cloud_1', 1:'cloud_2', 2:'above', 3:'if'}    # cloud_1: 오른손 위, cloud_2:왼손 위
 
-shineONE = {0:'eye', 1:'light'}
+shineONE = {0:'eye', 1:'light', 2:'morning_ONE'}
 shineTWO = {0:'bright', 1:'morning'}
 
 rainbowONE = {0:'wish', 1:'rainbow'}
 rainbowTWO = {0:'sincerely', 1:'if', 2:'rise', 3:'will_1', 4:'will_2'}
 
 likeONE = {0:'I', 1:'you', 2:'like'}
-likeTWO = {0:'always'}
+likeTWO = {0:'always', 1:'bright', 2:'above'}   ## 수정!!
 
 snowONE = {0:'white', 1:'color', 2:'leaf'}
 snowTWO = {0:'flower', 1:'snow_', 2:'as_', 3:'fly'}
@@ -70,13 +67,13 @@ for v in chain(galaxyTWO.values(), galaxyONE.values()):
     k+=1
 
 #################### 설정 #################
-actionsTWO = cloudTWO
-actionsONE = cloudONE
-for v in CLOUD.values():
+actionsTWO = likeTWO       # cloudTWO, shineTWO, rainbowTWO, likeTWO, snowTWO, forsythiaTWO, springTWO, galaxyTWO
+actionsONE = likeONE       # cloudONE, shineONE, rainbowONE, likeONE, snowONE, forsythiaONE, springONE, galaxyONE
+for v in LIKE.values():    # CLOUD, SHINE, RAINBOW, LIKE, SNOW, FORSYTHIA,SPIRNG
     Actions.append(v)
 
-model1 = load_model('models/cloudONE.h5')
-model2 = load_model('models/cloudTWO.h5')
+model1 = load_model('models/likeONE.h5')   # cloudONE / shineONE/ rainbowONE / likeONE / snowONE / forsythiaONE / springONE / galaxyONE
+model2 = load_model('models/likeTWO.h5')   # cloudTWO / shineTWO / rainbowTWO / likeTWO / snowTWO / forsythiaTWO / springTWO / galaxyTWO
 ###########################################
 
 seq_length = 10
@@ -217,7 +214,9 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
                 input_data = np.expand_dims(np.array(seqTWO[-seq_length:], dtype=np.float32), axis=0)
                 y_pred = model2.predict(input_data).squeeze()
                 i_pred = int(np.argmax(y_pred))
+
                 conf = y_pred[i_pred]
+
 
                 if conf < 0.99:
                     continue
@@ -236,6 +235,7 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
                 input_data = np.expand_dims(np.array(seqONE[-seq_length:], dtype=np.float32), axis=0)
                 y_pred = model1.predict(input_data).squeeze()
                 i_pred = int(np.argmax(y_pred))
+
                 conf = y_pred[i_pred]
 
                 if conf < 0.99:
