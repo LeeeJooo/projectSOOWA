@@ -9,7 +9,7 @@ CLOUD, SHINE, RAINBOW, LIKE, SNOW, FORSYTHIA, SPRING, GALAXY = defaultdict(int),
 actionsONE, actionsTWO = defaultdict(int), defaultdict(int)
 Actions = []
 
-cloudONE = {0:'white', 1:'be', 2:'here', 3:'probably', 4:'aboveONE'} ## 수정!!
+cloudONE = {0:'white', 1:'be', 2:'here', 3:'probably', 4:'aboveONE'}
 cloudTWO = {0:'cloud_1', 1:'cloud_2', 2:'above', 3:'if'}    # cloud_1: 오른손 위, cloud_2:왼손 위
 
 shineONE = {0:'eye', 1:'light', 2:'morning_ONE'}
@@ -19,12 +19,12 @@ rainbowONE = {0:'wish', 1:'rainbow'}
 rainbowTWO = {0:'sincerely', 1:'if', 2:'rise', 3:'will_1', 4:'will_2'}
 
 likeONE = {0:'I', 1:'you', 2:'like'}
-likeTWO = {0:'always', 1:'bright', 2:'above'}   ## 수정!!
+likeTWO = {0:'always', 1:'bright', 2:'above'}
 
 snowONE = {0:'white', 1:'color', 2:'leaf'}
 snowTWO = {0:'flower', 1:'snow_', 2:'as_', 3:'fly'}
 
-forsythiaONE = {0:'yellow_', 1:'color', 2:'black'}
+forsythiaONE = {0:'yellow_', 1:'black'} # 수정!!
 forsythiaTWO = {0:'flower', 1:'shadow_', 2:'below'}
 
 springONE = {0:'leaf'}
@@ -67,13 +67,13 @@ for v in chain(galaxyTWO.values(), galaxyONE.values()):
     k+=1
 
 #################### 설정 #################
-actionsTWO = likeTWO       # cloudTWO, shineTWO, rainbowTWO, likeTWO, snowTWO, forsythiaTWO, springTWO, galaxyTWO
-actionsONE = likeONE       # cloudONE, shineONE, rainbowONE, likeONE, snowONE, forsythiaONE, springONE, galaxyONE
-for v in LIKE.values():    # CLOUD, SHINE, RAINBOW, LIKE, SNOW, FORSYTHIA,SPIRNG
+actionsTWO = forsythiaTWO       # cloudTWO, shineTWO, rainbowTWO, likeTWO, snowTWO, forsythiaTWO, springTWO, galaxyTWO
+actionsONE = forsythiaONE       # cloudONE, shineONE, rainbowONE, likeONE, snowONE, forsythiaONE, springONE, galaxyONE
+for v in FORSYTHIA.values():    # CLOUD, SHINE, RAINBOW, LIKE, SNOW, FORSYTHIA,SPIRNG
     Actions.append(v)
 
-model1 = load_model('models/likeONE.h5')   # cloudONE / shineONE/ rainbowONE / likeONE / snowONE / forsythiaONE / springONE / galaxyONE
-model2 = load_model('models/likeTWO.h5')   # cloudTWO / shineTWO / rainbowTWO / likeTWO / snowTWO / forsythiaTWO / springTWO / galaxyTWO
+model1 = load_model('models/forsythiaONE.h5')   # cloudONE / shineONE/ rainbowONE / likeONE / snowONE / forsythiaONE / springONE / galaxyONE
+model2 = load_model('models/forsythiaTWO.h5')   # cloudTWO / shineTWO / rainbowTWO / likeTWO / snowTWO / forsythiaTWO / springTWO / galaxyTWO
 ###########################################
 
 seq_length = 10
