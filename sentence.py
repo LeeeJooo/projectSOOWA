@@ -24,10 +24,10 @@ likeTWO = {0:'always', 1:'bright', 2:'above'}
 snowONE = {0:'white', 1:'color', 2:'leaf'}
 snowTWO = {0:'flower', 1:'snow_', 2:'as_', 3:'fly'}
 
-forsythiaONE = {0:'yellow_', 1:'black'} # 수정!!
+forsythiaONE = {0:'yellow_', 1:'black'}
 forsythiaTWO = {0:'flower', 1:'shadow_', 2:'below'}
 
-springONE = {0:'leaf'}
+springONE = {0:'leaf', 1:'wish', 2:'rainbow'}
 springTWO = {0:'season', 1:'warm', 2:'wind', 3:'because_1', 4:'because_2', 5:'flower', 6:'together', 7:'bright', 8:'smile'}
 
 galaxyONE = {0:'blue', 1:'color', 2:'star'}
@@ -67,13 +67,13 @@ for v in chain(galaxyTWO.values(), galaxyONE.values()):
     k+=1
 
 #################### 설정 #################
-actionsTWO = forsythiaTWO       # cloudTWO, shineTWO, rainbowTWO, likeTWO, snowTWO, forsythiaTWO, springTWO, galaxyTWO
-actionsONE = forsythiaONE       # cloudONE, shineONE, rainbowONE, likeONE, snowONE, forsythiaONE, springONE, galaxyONE
-for v in FORSYTHIA.values():    # CLOUD, SHINE, RAINBOW, LIKE, SNOW, FORSYTHIA,SPIRNG
+actionsTWO = springTWO       # cloudTWO, shineTWO, rainbowTWO, likeTWO, snowTWO, forsythiaTWO, springTWO, galaxyTWO
+actionsONE = springONE       # cloudONE, shineONE, rainbowONE, likeONE, snowONE, forsythiaONE, springONE, galaxyONE
+for v in SPRING.values():    # CLOUD, SHINE, RAINBOW, LIKE, SNOW, FORSYTHIA,SPIRNG
     Actions.append(v)
 
-model1 = load_model('models/forsythiaONE.h5')   # cloudONE / shineONE/ rainbowONE / likeONE / snowONE / forsythiaONE / springONE / galaxyONE
-model2 = load_model('models/forsythiaTWO.h5')   # cloudTWO / shineTWO / rainbowTWO / likeTWO / snowTWO / forsythiaTWO / springTWO / galaxyTWO
+model1 = load_model('models/springONE.h5')   # cloudONE / shineONE/ rainbowONE / likeONE / snowONE / forsythiaONE / springONE / galaxyONE
+model2 = load_model('models/springTWO.h5')   # cloudTWO / shineTWO / rainbowTWO / likeTWO / snowTWO / forsythiaTWO / springTWO / galaxyTWO
 ###########################################
 
 seq_length = 10
