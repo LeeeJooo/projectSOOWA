@@ -5,33 +5,54 @@ from tensorflow.keras.models import load_model
 from collections import defaultdict
 from itertools import chain
 
-CLOUD, SHINE, RAINBOW, LIKE, SNOW, FORSYTHIA, SPRING, GALAXY = defaultdict(int), defaultdict(int), defaultdict(int), defaultdict(int), defaultdict(int), defaultdict(int), defaultdict(int), defaultdict(int)
+## 수정!! ##
+CLOUD, SHINE, RAINBOW, LIKE, SNOW, FORSYTHIA, SPRING, GALAXY, ONE, TWO, ALL = defaultdict(int), defaultdict(int), defaultdict(int), defaultdict(int), defaultdict(int), defaultdict(int), defaultdict(int), defaultdict(int), defaultdict(int), defaultdict(int), defaultdict(int)
 actionsONE, actionsTWO = defaultdict(int), defaultdict(int)
 Actions = []
 
 cloudONE = {0:'white', 1:'be', 2:'here', 3:'probably', 4:'aboveONE'}
-cloudTWO = {0:'cloud_1', 1:'cloud_2', 2:'above', 3:'if'}    # cloud_1: 오른손 위, cloud_2:왼손 위
+cloudTWO = {0:'cloud', 1:'cloud', 2:'above', 3:'if'}    # cloud_1: 오른손 위, cloud_2:왼손 위
 
-shineONE = {0:'eye', 1:'light', 2:'morning_ONE'}
+shineONE = {0:'eye', 1:'light', 2:'morning'}
 shineTWO = {0:'bright', 1:'morning'}
 
 rainbowONE = {0:'wish', 1:'rainbow'}
-rainbowTWO = {0:'sincerely', 1:'if', 2:'rise', 3:'will_1', 4:'will_2'}
+rainbowTWO = {0:'sincerely', 1:'if', 2:'rise', 3:'will', 4:'will'}
 
 likeONE = {0:'I', 1:'you', 2:'like'}
 likeTWO = {0:'always', 1:'bright', 2:'above'}
 
-snowONE = {0:'white', 1:'color', 2:'leaf'}
+snowONE = {0:'white', 1:'leaf', 2:'color'}
 snowTWO = {0:'flower', 1:'snow_', 2:'as_', 3:'fly'}
 
-forsythiaONE = {0:'yellow_', 1:'black'}
+forsythiaONE = {0:'yellow', 1:'black', 2:'shadow_', 3:'below'}
 forsythiaTWO = {0:'flower', 1:'shadow_', 2:'below'}
 
 springONE = {0:'leaf', 1:'wish', 2:'rainbow'}
-springTWO = {0:'season', 1:'warm', 2:'wind', 3:'because_1', 4:'because_2', 5:'flower', 6:'together', 7:'bright', 8:'smile'}
+springTWO = {0:'season', 1:'warm', 2:'wind', 3:'because', 4:'because', 5:'flower', 6:'together', 7:'bright', 8:'smile'}
 
 galaxyONE = {0:'blue', 1:'color', 2:'star'}
 galaxyTWO = {0:'bright', 1:'gorup'}
+
+
+## 추가 !! ##
+SLONE = {0:'white', 1:'be', 2:'here', 3:'probably', 4:'above',
+         5:'eye', 6:'light', 7:'morning', 8:'wish', 9:'rainbow',
+         10:'I', 11:'you', 12:'like', 13:'leaf', 14:'color',
+         15:'yellow', 16:'black', 17:'shadow', 18:'below', 19:'blue',
+         20:'star'}
+KWONE = {0:'finger_heart', 1:'finger_heart', 2:'hi', 3:'hi', 4:'meosseug',
+         5:'meosseug', 6:'kosseug', 7:'kosseeug', 8:'fuckyou', 9:'fuckyou',
+         10:'jawV', 11:'jawV', 12:'V', 13:'V'}
+
+SLTWO = {0:'cloud', 1:'cloud', 2:'above', 3:'if', 4:'bright',
+         5:'morning', 6:'sincerely', 8:'rise', 9:'will',
+         10:'will', 11:'always', 12:'flower', 13:'snow', 14:'as',
+         15:'fly', 16:'shadow', 17:'below', 18:'season', 19:'warm',
+         20:'wind', 21:'because', 22:'because', 23:'together', 24:'smile',
+         25:'group', 26:'jewel'}
+KWTWO = {0:'finger_heart', 1:'small_heart', 2:'middle_heart', 3:'big_heart',
+         4:'hi', 5:'flower_cup', 6:'V', 7:'V', 8:'fuckyou'}
 
 k=0
 for v in chain(cloudTWO.values(), cloudONE.values()):
@@ -66,14 +87,29 @@ for v in chain(galaxyTWO.values(), galaxyONE.values()):
     GALAXY[k] = v
     k+=1
 
+## 추가!! ##
+## ALL ##
+k=0
+for v in chain(SLONE.values(), KWONE.values()):
+    ONE[k] = v
+    k+=1
+k=0
+for v in chain(SLTWO.values(), KWTWO.values()):
+    TWO[k] = v
+    k+=1
+k=0
+for v in chain(TWO.values(), ONE.values()):
+    ALL[k] = v
+    k+=1
+
 #################### 설정 #################
-actionsTWO = springTWO       # cloudTWO, shineTWO, rainbowTWO, likeTWO, snowTWO, forsythiaTWO, springTWO, galaxyTWO
-actionsONE = springONE       # cloudONE, shineONE, rainbowONE, likeONE, snowONE, forsythiaONE, springONE, galaxyONE
-for v in SPRING.values():    # CLOUD, SHINE, RAINBOW, LIKE, SNOW, FORSYTHIA,SPIRNG
+actionsTWO = TWO       # TWO, cloudTWO, shineTWO, rainbowTWO, likeTWO, snowTWO, forsythiaTWO, springTWO, galaxyTWO
+actionsONE = ONE       # ONE, cloudONE, shineONE, rainbowONE, likeONE, snowONE, forsythiaONE, springONE, galaxyONE
+for v in ALL.values():    # ALL, CLOUD, SHINE, RAINBOW, LIKE, SNOW, FORSYTHIA, SPIRNG
     Actions.append(v)
 
-model1 = load_model('models/springONE.h5')   # cloudONE / shineONE/ rainbowONE / likeONE / snowONE / forsythiaONE / springONE / galaxyONE
-model2 = load_model('models/springTWO.h5')   # cloudTWO / shineTWO / rainbowTWO / likeTWO / snowTWO / forsythiaTWO / springTWO / galaxyTWO
+model1 = load_model('models/ALLONE_4.h5')   # cloudONE / shineONE/ rainbowONE / likeONE / snowONE / forsythiaONE / springONE / galaxyONE
+model2 = load_model('models/ALLTWO_4.h5')   # cloudTWO / shineTWO / rainbowTWO / likeTWO / snowTWO / forsythiaTWO / springTWO / galaxyTWO
 ###########################################
 
 seq_length = 10
@@ -148,9 +184,10 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
             LHAngle = np.degrees(LHAngle)  # Convert radian to degree
             Angle = np.append(Angle, LHAngle)
 
+
         # Get distance info between face&hand
         if results.face_landmarks is not None:
-            facdidx = [368, 159]
+            facdidx = [10, 368, 159]
             handidx = [0, 4, 8, 12, 16, 20]
 
             for i in facdidx:
@@ -167,6 +204,7 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
                     distance = np.append(distance, Fjoint[368] - LHjoint[i])  # 왼쪽눈-왼쪽손
                     distance = np.append(distance, Fjoint[159] - LHjoint[i])  # 오른쪽눈-왼쪽손
                 # print("+ left", len(distance))  # len(distance) = 72    (right + left)
+            TOP = Fjoint[10]
 
         # Get Arm&Face angle info AND distance info between finger&face
         if results.pose_landmarks is not None:
